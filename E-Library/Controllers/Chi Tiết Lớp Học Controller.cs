@@ -7,5 +7,6 @@ namespace E_Library.Controllers
     [ApiController]
     public class Chi_Tiết_Lớp_Học_Controller : ControllerBase
     {
+
     }
 }
