@@ -10,13 +10,13 @@ namespace E_Library.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class DangNhapLeadership : ControllerBase
+    public class LeadershipLogin : ControllerBase
     {
         public static LeadershipRegister leadership = new LeadershipRegister();
         private readonly IConfiguration _configuration;
 
 
-        public DangNhapLeadership(IConfiguration configuration)
+        public LeadershipLogin(IConfiguration configuration)
         {
             _configuration = configuration;
         }

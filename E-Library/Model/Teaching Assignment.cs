@@ -10,8 +10,8 @@ namespace E_Library.Model
         public string Starting_date { get; set; } = string.Empty;
         public string Ending_date { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public IEnumerable<Subject> Subject { get; set; }
-        public IEnumerable<Teacher> Teacher { get; set; }
+        //public IEnumerable<Subject> Subject { get; set; }
+        //public IEnumerable<Teacher> Teacher { get; set; }
 
     }
 }

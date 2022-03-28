@@ -11,6 +11,6 @@ namespace E_Library.Model
         public string Position { get; set; } = string.Empty;
         public DateTime Starting_date { get; set; }
         public DateTime Ending_date { get; set; }
-        public IEnumerable<Subject_group> Subject_group { get; set; }
+        //public IEnumerable<Subject_group> Subject_group { get; set; }
     }
 }

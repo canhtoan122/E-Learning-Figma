@@ -35,8 +35,8 @@ namespace E_Library.Model
         public string Father_phone_number { get; set; } = string.Empty;
         public string Mother_phone_number { get; set; } = string.Empty;
         public string Guardian_phone_number { get; set; } = string.Empty;
-        public IEnumerable<School_year> School_year { get; set; }
-        public IEnumerable<Department> Department { get; set; }
-        public IEnumerable<Class> CLass { get; set; }
+        //public IEnumerable<School_year> School_year { get; set; }
+        //public IEnumerable<Department> Department { get; set; }
+        //public IEnumerable<Class> CLass { get; set; }
     }
 }

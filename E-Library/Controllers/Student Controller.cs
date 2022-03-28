@@ -56,8 +56,8 @@ namespace E_Library.Controllers
             hoc_vien.Place_of_birth = request.Place_of_birth;
             hoc_vien.Ethnic = request.Ethnic;
             hoc_vien.Religion = request.Religion;
-            hoc_vien.School_year = request.School_year;
-            hoc_vien.Department = request.Department;
+            //hoc_vien.School_year = request.School_year;
+            //hoc_vien.Department = request.Department;
             hoc_vien.Class = request.Class;
             hoc_vien.Student_code = request.Student_code;
             hoc_vien.Date_of_admission = request.Date_of_admission;
@@ -100,7 +100,7 @@ namespace E_Library.Controllers
             return Ok(await _context.Student.ToListAsync());
         }
 
-        [HttpPost("{Post File}")]
+        [HttpPost("Post File")]
         [Consumes("multipart/form-data")]
         public async Task<HttpResponseMessage> PostAsync([FromForm] FileManagement model)
         {

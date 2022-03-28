@@ -43,7 +43,7 @@ namespace E_Library.Controllers
             return Ok(await _context.Disciplinary_list.ToListAsync());
         }
 
-        [HttpPost("{Post File}")]
+        [HttpPost("Post File")]
         [Consumes("multipart/form-data")]
         public async Task<HttpResponseMessage> PostAsync([FromForm] FileManagement model)
         {

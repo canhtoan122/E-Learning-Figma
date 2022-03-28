@@ -12,7 +12,7 @@ namespace E_Library.Model
         public string Student_number { get; set; } = string.Empty;
         public string Class_classify { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public ICollection<School_year> School_year { get; set; }
-        public ICollection<Subject> Subject { get; set; }
+        //public IEnumerable<School_year> School_year { get; set; }
+        //public IEnumerable<Subject> Subject { get; set; }
     }
 }

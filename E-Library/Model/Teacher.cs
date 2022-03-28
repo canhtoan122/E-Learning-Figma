@@ -26,7 +26,7 @@ namespace E_Library.Model
         public bool Party_members { get; set; }
         public DateTime Date_of_joining_the_union { get; set; }
         public DateTime Date_of_joining_the_party { get; set; }
-        public IEnumerable<Subject_group> Subject_group { get; set; }
-        public IEnumerable<Subject> Subject { get; set; }
+        //public IEnumerable<Subject_group> Subject_group { get; set; }
+        //public IEnumerable<Subject> Subject { get; set; }
     }
 }
