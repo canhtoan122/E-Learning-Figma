@@ -1,5 +1,6 @@
 ﻿using E_Library.Data;
 using E_Library.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ namespace E_Library.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Leadership")]
     public class Manage_Exam_Controller : ControllerBase
     {
         private readonly DataContext _context;

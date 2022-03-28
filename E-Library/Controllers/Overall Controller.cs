@@ -18,21 +18,21 @@ namespace E_Library.Controllers
         }
 
         [HttpGet("Student")]
-        
+        [Authorize (Roles = "Leadership")]
         public async Task<ActionResult<List<Student>>> Get()
         {
             var sum = _context.Student.Count<Student>();
             return Ok(sum);
         }
         [HttpGet("Giảng viên")]
-        
+        [Authorize(Roles = "Leadership")]
         public async Task<ActionResult<List<Teacher>>> Get_Teacher()
         {
             var sum = _context.Teacher.Count<Teacher>();
             return Ok(sum);
         }
         [HttpGet("Lớp học")]
-        
+        [Authorize(Roles = "Leadership")]
         public async Task<ActionResult<List<Class>>> Get_Classroom()
         {
             var sum = _context.Class.Count<Class>();

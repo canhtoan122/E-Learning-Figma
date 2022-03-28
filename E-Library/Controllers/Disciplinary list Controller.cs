@@ -1,5 +1,6 @@
 ﻿using E_Library.Data;
 using E_Library.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ namespace E_Library.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Leadership")]
     public class Disciplinary_list_Controller : ControllerBase
     {
         private readonly string AppDirectory = Path.Combine(Directory.GetCurrentDirectory(), "File");
