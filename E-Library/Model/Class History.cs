@@ -6,7 +6,7 @@ namespace E_Library.Model
     {
         [Key]
         public int Class_History_ID { get; set; }
-        public string Teacher { get; set; } = string.Empty;
+        public string Teacher { get; internal set; }
         public string Subject { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Class { get; set; } = string.Empty;

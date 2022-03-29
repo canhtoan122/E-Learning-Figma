@@ -48,17 +48,9 @@ namespace E_Library.Controllers
             }
         }
 
-        [HttpGet("Danh sách Môn học")]
+        [HttpGet("Subject List")]
         public async Task<ActionResult<List<Subject>>> Subject_List()
         {
-            return Ok(await _context.Subject.ToListAsync());
-        }
-        [HttpGet("Tìm Tổ bộ môn")]
-        public async Task<ActionResult<List<Subject>>> Search_subject_group(string name)
-        {
-            var result = await _context.Subject.FindAsync(name);
-            if (result == null)
-                return BadRequest("Subject group not found");
             return Ok(await _context.Subject.ToListAsync());
         }
 

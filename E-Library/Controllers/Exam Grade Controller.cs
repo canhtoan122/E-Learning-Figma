@@ -1,6 +1,5 @@
 ﻿using E_Library.Data;
 using E_Library.Model;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,36 +9,42 @@ namespace E_Library.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Leadership")]
-    public class Teacher_Controller : ControllerBase
+    public class Exam_Grade_Controller : ControllerBase
     {
         private readonly string AppDirectory = Path.Combine(Directory.GetCurrentDirectory(), "File");
         private static List<FileRecord> fileDB = new List<FileRecord>();
         private readonly DataContext _context;
 
-        public Teacher_Controller(DataContext context)
+        public Exam_Grade_Controller(DataContext context)
         {
             _context = context;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<List<Teacher>>> Get()
+        [HttpGet("Student")]
+        public async Task<ActionResult<List<Student>>> Get_Student()
         {
-            return Ok(await _context.Teacher.ToListAsync());
+            return Ok(await _context.Student.ToListAsync());
         }
-        [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Teacher>>> Teacher_Search(string name)
+        [HttpGet("Grade")]
+        public async Task<ActionResult<List<Grade>>> Get_Grade()
+        {
+            return Ok(await _context.Grade.ToListAsync());
+        }
+        [HttpGet("Exam Grade")]
+        public async Task<ActionResult<List<Exam_Grade>>> Get_Exam_Grade()
+        {
+            return Ok(await _context.Exam_Grade.ToListAsync());
+        }
+
+        [HttpGet("School Year Filter")]
+        public async Task<ActionResult<IEnumerable<School_year>>> School_year_Filter(string name)
         {
             try
             {
-                IQueryable<Teacher> query = _context.Teacher;
+                IQueryable<School_year> query = _context.School_year;
                 if (!string.IsNullOrEmpty(name))
                 {
-                    query = query.Where(e => e.Teacher_code.Contains(name));
-                    query = query.Where(e => e.Full_name.Contains(name));
-                    query = query.Where(e => e.Sex.Contains(name));
-                    query = query.Where(e => e.Subject_group.Contains(name));
-                    query = query.Where(e => e.Position.Contains(name));
+                    query = query.Where(e => e.School_year_time.Contains(name));
                 }
                 if (query.Any())
                 {
@@ -53,59 +58,70 @@ namespace E_Library.Controllers
             }
         }
 
-        [HttpPost]
-        public async Task<ActionResult<List<Teacher>>> Add(Teacher giang_vien)
+        [HttpGet("Subject Filter")]
+        public async Task<ActionResult<IEnumerable<Subject>>> Subject_Filter(string name)
         {
-            _context.Teacher.Add(giang_vien);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Teacher.ToListAsync());
+            try
+            {
+                IQueryable<Subject> query = _context.Subject;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Subject_name.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
-        [HttpPut]
-        public async Task<ActionResult<List<Teacher>>> Update(Teacher request)
+        [HttpGet("Department Filter")]
+        public async Task<ActionResult<IEnumerable<Department>>> Department_Filter(string name)
         {
-            var result = await _context.Teacher.FindAsync(request.Teacher_ID);
-            if (result == null)
-                return BadRequest("Teacher not found.");
-
-            result.Teacher_code = request.Teacher_code;
-            result.Full_name = request.Full_name;
-            result.Date_of_birth = request.Date_of_birth;
-            result.Sex = request.Sex;
-            result.Ethnic = request.Ethnic;
-            result.Starting_date = request.Starting_date;
-            result.Nationality = request.Nationality;
-            result.Religion = request.Religion;
-            result.Status = request.Status;
-            result.Aliases = request.Aliases;
-            result.Province_city = request.Province_city;
-            result.Ward = request.Ward;
-            result.District = request.District;
-            result.Address = request.Address;
-            result.Email = request.Email;
-            result.Phone_number = request.Phone_number;
-            result.Union_members = request.Union_members;
-            result.Party_members = request.Party_members;
-            result.Date_of_joining_the_union = request.Date_of_joining_the_union;
-            result.Date_of_joining_the_party = request.Date_of_joining_the_party;
-
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Teacher.ToListAsync());
+            try
+            {
+                IQueryable<Department> query = _context.Department;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Department_name.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<List<Teacher>>> Delete(int id)
+        [HttpGet("Department Filter")]
+        public async Task<ActionResult<IEnumerable<Class>>> Class_Filter(string name)
         {
-            var result = await _context.Teacher.FindAsync(id);
-            if (result == null)
-                return BadRequest("Teacher not found.");
-
-            _context.Teacher.Remove(result);
-            await _context.SaveChangesAsync();
-
-            return Ok(await _context.Teacher.ToListAsync());
+            try
+            {
+                IQueryable<Class> query = _context.Class;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Class_name.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost("Post File")]
@@ -235,5 +251,5 @@ namespace E_Library.Controllers
             }
             return Ok(await _context.FileData.ToListAsync());
         }
-    }
+    } 
 }

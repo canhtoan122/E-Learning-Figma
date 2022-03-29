@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Library.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220329063533_CreateInitial")]
+    [Migration("20220329080150_CreateInitial")]
     partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -73,6 +73,10 @@ namespace E_Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Subject_type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -115,11 +119,31 @@ namespace E_Library.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Disciplinary_list_ID"), 1L, 1);
 
+                    b.Property<string>("Date_of_birth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Disciplinary_content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Disciplinary_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Disciplinary_number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Student_code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Student_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -202,6 +226,26 @@ namespace E_Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Award_number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Date_of_birth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sex")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Student_code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Student_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("List_of_award_ID");
 
                     b.ToTable("List_of_award");
@@ -265,6 +309,10 @@ namespace E_Library.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Notification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -423,11 +471,23 @@ namespace E_Library.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("School_transfer_admission_ID"), 1L, 1);
 
+                    b.Property<string>("Date_of_birth")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("District")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Province_city")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Sex")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -675,11 +735,16 @@ namespace E_Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Subject_ID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Subject_group_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Subject_group_ID");
+
+                    b.HasIndex("Subject_ID");
 
                     b.ToTable("Subject_group");
                 });
@@ -693,6 +758,10 @@ namespace E_Library.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Subject_setting_ID"), 1L, 1);
 
                     b.Property<string>("Notification")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -757,6 +826,10 @@ namespace E_Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Province_city")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -773,6 +846,10 @@ namespace E_Library.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject_group")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -880,6 +957,10 @@ namespace E_Library.Migrations
                     b.Property<bool>("Teacher_profile")
                         .HasColumnType("bit");
 
+                    b.Property<string>("User_number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("User_ID");
 
                     b.ToTable("User_group");
@@ -897,6 +978,10 @@ namespace E_Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("User_group")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -908,6 +993,17 @@ namespace E_Library.Migrations
                     b.HasKey("User_list_ID");
 
                     b.ToTable("User_list");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Subject_group", b =>
+                {
+                    b.HasOne("E_Library.Model.Subject", "Subject")
+                        .WithMany()
+                        .HasForeignKey("Subject_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject");
                 });
 #pragma warning restore 612, 618
         }

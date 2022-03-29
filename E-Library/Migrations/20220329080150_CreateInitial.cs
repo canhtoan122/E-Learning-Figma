@@ -34,7 +34,8 @@ namespace E_Library.Migrations
                     Classroom_setting_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Subject_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Notification = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Notification = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,6 +63,11 @@ namespace E_Library.Migrations
                 {
                     Disciplinary_list_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Student_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Student_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date_of_birth = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Disciplinary_number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Disciplinary_date = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Disciplinary_content = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -108,6 +114,11 @@ namespace E_Library.Migrations
                 {
                     List_of_award_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Student_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Student_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date_of_birth = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Award_number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Award_date = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Award_content = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -142,6 +153,7 @@ namespace E_Library.Migrations
                     Management_of_training_levels_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Degree_training = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Form_of_training = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Training_time = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Notification = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -211,12 +223,15 @@ namespace E_Library.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Student_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Student_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date_of_birth = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Transfer_date = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Transfer_semester = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Province_city = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     District = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Transfer_from = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Transfer_reason = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Transfer_reason = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Department = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -301,27 +316,14 @@ namespace E_Library.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Subject_group",
-                columns: table => new
-                {
-                    Subject_group_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Subject_group_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Head_of_department = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subject_group", x => x.Subject_group_ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Subject_setting",
                 columns: table => new
                 {
                     Subject_setting_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Subject_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Notification = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Notification = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -338,6 +340,8 @@ namespace E_Library.Migrations
                     Full_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Date_of_birth = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Sex = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject_group = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ethnic = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Starting_date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Nationality = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -398,6 +402,7 @@ namespace E_Library.Migrations
                     User_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Group_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    User_number = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Notification = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Decentralization = table.Column<bool>(type: "bit", nullable: false),
                     Data_declaration = table.Column<bool>(type: "bit", nullable: false),
@@ -419,12 +424,39 @@ namespace E_Library.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    User_group = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    User_group = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User_list", x => x.User_list_ID);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Subject_group",
+                columns: table => new
+                {
+                    Subject_group_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Subject_group_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Head_of_department = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject_ID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subject_group", x => x.Subject_group_ID);
+                    table.ForeignKey(
+                        name: "FK_Subject_group_Subject_Subject_ID",
+                        column: x => x.Subject_ID,
+                        principalTable: "Subject",
+                        principalColumn: "Subject_ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Subject_group_Subject_ID",
+                table: "Subject_group",
+                column: "Subject_ID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -472,9 +504,6 @@ namespace E_Library.Migrations
                 name: "Student");
 
             migrationBuilder.DropTable(
-                name: "Subject");
-
-            migrationBuilder.DropTable(
                 name: "Subject_group");
 
             migrationBuilder.DropTable(
@@ -494,6 +523,9 @@ namespace E_Library.Migrations
 
             migrationBuilder.DropTable(
                 name: "User_list");
+
+            migrationBuilder.DropTable(
+                name: "Subject");
         }
     }
 }

@@ -1,45 +1,107 @@
 ﻿using E_Library.Data;
 using E_Library.Model;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Net;
+
+// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace E_Library.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Leadership")]
-    public class Teacher_Controller : ControllerBase
+    public class Exam_List_Controller : ControllerBase
     {
         private readonly string AppDirectory = Path.Combine(Directory.GetCurrentDirectory(), "File");
         private static List<FileRecord> fileDB = new List<FileRecord>();
         private readonly DataContext _context;
 
-        public Teacher_Controller(DataContext context)
+        public Exam_List_Controller(DataContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Teacher>>> Get()
+        public async Task<ActionResult<List<Exam_List>>> Get()
         {
-            return Ok(await _context.Teacher.ToListAsync());
+            return Ok(await _context.Exam_List.ToListAsync());
         }
+
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Teacher>>> Teacher_Search(string name)
+        public async Task<ActionResult<IEnumerable<Exam_List>>> Exam_List_Search(string name)
         {
             try
             {
-                IQueryable<Teacher> query = _context.Teacher;
+                IQueryable<Exam_List> query = _context.Exam_List;
                 if (!string.IsNullOrEmpty(name))
                 {
-                    query = query.Where(e => e.Teacher_code.Contains(name));
-                    query = query.Where(e => e.Full_name.Contains(name));
-                    query = query.Where(e => e.Sex.Contains(name));
-                    query = query.Where(e => e.Subject_group.Contains(name));
-                    query = query.Where(e => e.Position.Contains(name));
+                    query = query.Where(e => e.Topic.Contains(name));           
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
+
+        [HttpGet("subject filter")]
+        public async Task<ActionResult<IEnumerable<Exam_List>>> Subject_filter(string name)
+        {
+            try
+            {
+                IQueryable<Exam_List> query = _context.Exam_List;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Subject.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
+
+        [HttpGet("department filter")]
+        public async Task<ActionResult<IEnumerable<Exam_List>>> Department_filter(string name)
+        {
+            try
+            {
+                IQueryable<Exam_List> query = _context.Exam_List;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Department.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
+        [HttpGet("department filter")]
+        public async Task<ActionResult<IEnumerable<Exam_List>>> Exam_Date_filter(string name)
+        {
+            try
+            {
+                IQueryable<Exam_List> query = _context.Exam_List;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Starting_date.Contains(name)
+                                    || e.Ending_date.Contains(name));
                 }
                 if (query.Any())
                 {
@@ -54,60 +116,48 @@ namespace E_Library.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Teacher>>> Add(Teacher giang_vien)
+        public async Task<ActionResult<List<Exam_List>>> Add(Exam_List exam)
         {
-            _context.Teacher.Add(giang_vien);
+            _context.Exam_List.Add(exam);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Teacher.ToListAsync());
+            return Ok(await _context.Exam_List.ToListAsync());
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Teacher>>> Update(Teacher request)
+        public async Task<ActionResult<List<Exam_List>>> Update(Exam_List request)
         {
-            var result = await _context.Teacher.FindAsync(request.Teacher_ID);
+            var result = await _context.Exam_List.FindAsync(request.Exam_List_ID);
             if (result == null)
-                return BadRequest("Teacher not found.");
+                return BadRequest("Exam not found.");
 
-            result.Teacher_code = request.Teacher_code;
-            result.Full_name = request.Full_name;
-            result.Date_of_birth = request.Date_of_birth;
-            result.Sex = request.Sex;
-            result.Ethnic = request.Ethnic;
+            result.Topic = request.Topic;
+            result.Description = request.Description;
+            result.Teaching_Assistant = request.Teaching_Assistant;
+            result.Exam_amount_of_time = request.Exam_amount_of_time;
             result.Starting_date = request.Starting_date;
-            result.Nationality = request.Nationality;
-            result.Religion = request.Religion;
-            result.Status = request.Status;
-            result.Aliases = request.Aliases;
-            result.Province_city = request.Province_city;
-            result.Ward = request.Ward;
-            result.District = request.District;
-            result.Address = request.Address;
-            result.Email = request.Email;
-            result.Phone_number = request.Phone_number;
-            result.Union_members = request.Union_members;
-            result.Party_members = request.Party_members;
-            result.Date_of_joining_the_union = request.Date_of_joining_the_union;
-            result.Date_of_joining_the_party = request.Date_of_joining_the_party;
+            result.Ending_date = request.Ending_date;
+            result.Security_password = request.Security_password;
+            result.Other_setting = request.Other_setting;
+            result.Shared_link = request.Shared_link;
 
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Teacher.ToListAsync());
+            return Ok(await _context.Exam_List.ToListAsync());
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<List<Teacher>>> Delete(int id)
+        [HttpDelete("id")]
+        public async Task<ActionResult<List<Exam_List>>> Delete(int id)
         {
-            var result = await _context.Teacher.FindAsync(id);
+            var result = await _context.Exam_List.FindAsync(id);
             if (result == null)
-                return BadRequest("Teacher not found.");
+                return BadRequest("Exam not found.");
 
-            _context.Teacher.Remove(result);
+            _context.Exam_List.Remove(result);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Teacher.ToListAsync());
+            return Ok(await _context.Exam_List.ToListAsync());
         }
-
         [HttpPost("Post File")]
         [Consumes("multipart/form-data")]
         public async Task<HttpResponseMessage> PostAsync([FromForm] FileManagement model)

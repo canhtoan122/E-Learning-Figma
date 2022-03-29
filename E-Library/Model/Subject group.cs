@@ -8,6 +8,6 @@ namespace E_Library.Model
         public int Subject_group_ID { get; set; }
         public string Subject_group_name { get; set; } = string.Empty;
         public string Head_of_department { get; set; } = string.Empty;
-        //public IEnumerable<Subject> Subject { get; set; }
+        public Subject Subject { get; set; }
     }
 }

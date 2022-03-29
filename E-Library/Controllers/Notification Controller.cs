@@ -8,28 +8,28 @@ namespace E_Library.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class Add_New_Lesson_Controller : ControllerBase
+    public class Notification_Controller : ControllerBase
     {
         private readonly DataContext _context;
 
-        public Add_New_Lesson_Controller(DataContext context)
+        public Notification_Controller(DataContext context)
         {
             _context = context;
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Lesson>>> Get()
+        public async Task<ActionResult<List<Notification>>> Get()
         {
-            return Ok(await _context.Lesson.ToListAsync());
+            return Ok(await _context.Classroom_setting.ToListAsync());
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Lesson>>> Add(Lesson lesson)
+        public async Task<ActionResult<List<Notification>>> Add(Notification notification)
         {
-            _context.Lesson.Add(lesson);
+            _context.Notification.Add(notification);
             await _context.SaveChangesAsync();
 
-            return Ok(await _context.Lesson.ToListAsync());
+            return Ok(await _context.Notification.ToListAsync());
         }
     }
 }
