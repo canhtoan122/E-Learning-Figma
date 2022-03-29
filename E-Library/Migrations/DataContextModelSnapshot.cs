@@ -486,6 +486,10 @@ namespace E_Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Serial")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Starting_date")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

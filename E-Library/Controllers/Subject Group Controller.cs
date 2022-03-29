@@ -25,6 +25,29 @@ namespace E_Library.Controllers
             return Ok(await _context.Subject_group.ToListAsync());
         }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Subject_group>>> Subject_Group_Search(string name)
+        {
+            try
+            {
+                IQueryable<Subject_group> query = _context.Subject_group;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Subject_group_name.Contains(name));
+                    query = query.Where(e => e.Head_of_department.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
+
         [HttpGet("Danh sách Môn học")]
         public async Task<ActionResult<List<Subject>>> Subject_List()
         {

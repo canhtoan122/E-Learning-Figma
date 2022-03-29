@@ -27,19 +27,36 @@ namespace E_Library.Controllers
         {
             return Ok(await _context.List_of_award.ToListAsync());
         }
-        [HttpGet("{Mã Học Viên}")]
-        public async Task<ActionResult<List<List_of_award>>> Get_Mã_Học_Viên(Student student)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<List_of_award>>> List_of_award_Search(string name)
         {
-            var result = await _context.Student.FindAsync(student);
-            if (result == null)
-                return BadRequest(" Ko tìm thấy học viên");
-            return Ok(result);
+            try
+            {
+                IQueryable<List_of_award> query = _context.List_of_award;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Student_code.Contains(name));
+                    query = query.Where(e => e.Student_name.Contains(name));
+                    query = query.Where(e => e.Date_of_birth.Contains(name));
+                    query = query.Where(e => e.Sex.Contains(name));
+                    query = query.Where(e => e.Award_number.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<List_of_award>>> Add(List_of_award khen_thuong)
+        public async Task<ActionResult<List<List_of_award>>> Add(List_of_award award)
         {
-            _context.List_of_award.Add(khen_thuong);
+            _context.List_of_award.Add(award);
             await _context.SaveChangesAsync();
 
             return Ok(await _context.List_of_award.ToListAsync());

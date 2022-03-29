@@ -7,6 +7,7 @@ namespace E_Library.Model
         [Key]
         public int User_ID { get; set; }
         public string Group_name { get; set; } = string.Empty;
+        public string User_number { get; set; } = string.Empty;
         public string Notification { get; set; } = string.Empty;
         public bool Decentralization { get; set; }
         public bool Data_declaration { get; set; }

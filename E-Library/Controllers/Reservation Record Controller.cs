@@ -28,13 +28,33 @@ namespace E_Library.Controllers
             return Ok(await _context.Reservation_Record.ToListAsync());
         }
 
-        [HttpGet("Tìm Mã học viên")]
-        public async Task<ActionResult<List<Reservation_Record>>> Search_mã_học_viên(string name)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Reservation_Record>>> Reservation_Record_Search(string name)
         {
-            var result = await _context.Reservation_Record.FindAsync(name);
-            if (result == null)
-                return BadRequest("Student not found");
-            return Ok(await _context.Reservation_Record.ToListAsync());
+            try
+            {
+                IQueryable<Reservation_Record> query = _context.Reservation_Record;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Student_code.Contains(name));
+                    query = query.Where(e => e.Student_name.Contains(name));
+                    query = query.Where(e => e.Date_of_birth.Contains(name));
+                    query = query.Where(e => e.Sex.Contains(name));
+                    query = query.Where(e => e.Reserve_class.Contains(name));
+                    query = query.Where(e => e.Reserve_date.Contains(name));
+                    query = query.Where(e => e.Reserve_period.Contains(name));
+                    query = query.Where(e => e.Reserve_reason.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Library.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220328032318_CreateInitial")]
+    [Migration("20220329063533_CreateInitial")]
     partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -485,6 +485,10 @@ namespace E_Library.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Semester_start_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Serial")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

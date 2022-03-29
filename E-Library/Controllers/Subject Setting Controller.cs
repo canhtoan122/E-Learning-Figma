@@ -25,6 +25,30 @@ namespace E_Library.Controllers
             return Ok(await _context.Subject_setting.ToListAsync());
         }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Subject_setting>>> Subject_setting_Search(string name)
+        {
+            try
+            {
+                IQueryable<Subject_setting> query = _context.Subject_setting;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Subject_type.Contains(name));
+                    query = query.Where(e => e.Status.Contains(name));
+                    query = query.Where(e => e.Notification.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<List<Subject_setting>>> Add(Subject_setting subject)
         {

@@ -6,6 +6,7 @@ namespace E_Library.Model
     {
         [Key]
         public int School_year_ID { get; set; }
+        public string Serial { get; set; } = string.Empty;
         public string School_year_time { get; set; } = string.Empty;
         public string Starting_date { get; set; } = string.Empty;
         public string Ending_date { get; set; } = string.Empty;

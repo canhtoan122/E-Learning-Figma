@@ -25,6 +25,31 @@ namespace E_Library.Controllers
             return Ok(await _context.User_list.ToListAsync());
         }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<User_list>>> User_list_Search(string name)
+        {
+            try
+            {
+                IQueryable<User_list> query = _context.User_list;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Username.Contains(name));
+                    query = query.Where(e => e.Email.Contains(name));
+                    query = query.Where(e => e.User_group.Contains(name));
+                    query = query.Where(e => e.Status.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<List<User_list>>> Add(User_list nguoi_dung)
         {

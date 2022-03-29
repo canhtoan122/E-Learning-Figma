@@ -25,13 +25,28 @@ namespace E_Library.Controllers
             return Ok(await _context.Management_of_training_levels.ToListAsync());
         }
 
-        [HttpGet("{Trình độ}")]
-        public async Task<ActionResult<List<Management_of_training_levels>>> Get_Mã_Học_Viên(string level)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Management_of_training_levels>>> Management_of_training_levels_Search(string name)
         {
-            var result = await _context.Management_of_training_levels.FindAsync(level);
-            if (result == null)
-                return BadRequest("Training level not found");
-            return Ok(result);
+            try
+            {
+                IQueryable<Management_of_training_levels> query = _context.Management_of_training_levels;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Degree_training.Contains(name));
+                    query = query.Where(e => e.Status.Contains(name));
+                    query = query.Where(e => e.Notification.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]

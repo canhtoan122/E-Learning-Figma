@@ -32,6 +32,30 @@ namespace E_Library.Controllers
                 return BadRequest("Grade not found.");
             return Ok(result);
         }
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Grade>>> Grade_Search(string name)
+        {
+            try
+            {
+                IQueryable<Grade> query = _context.Grade;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Grade_name.Contains(name));
+                    query = query.Where(e => e.Score_factor.Contains(name));
+                    query = query.Where(e => e.Minimum_number_of_columns_for_semester_1.Contains(name));
+                    query = query.Where(e => e.Minimum_number_of_columns_for_semester_2.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
 
         [HttpPost]
         public async Task<ActionResult<List<Grade>>> Add(Grade diem)
@@ -47,7 +71,7 @@ namespace E_Library.Controllers
         {
             var result = await _context.Grade.FindAsync(request.Grade_ID);
             if (result == null)
-                return BadRequest("Ko tìm thấy khoa/khối.");
+                return BadRequest("Grade not found.");
 
             result.Grade_name = request.Grade_name;
             result.Score_factor = request.Score_factor;

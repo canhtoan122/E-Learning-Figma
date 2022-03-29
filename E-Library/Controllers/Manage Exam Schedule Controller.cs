@@ -25,6 +25,34 @@ namespace E_Library.Controllers
             return Ok(await _context.Manage_Exam_Schedule.ToListAsync());
         }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Manage_Exam_Schedule>>> Manage_Exam_Schedule_Search(string name)
+        {
+            try
+            {
+                IQueryable<Manage_Exam_Schedule> query = _context.Manage_Exam_Schedule;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Semester.Contains(name));
+                    query = query.Where(e => e.Exam_date.Contains(name));
+                    query = query.Where(e => e.Department.Contains(name));
+                    query = query.Where(e => e.Exam_subject.Contains(name));
+                    query = query.Where(e => e.Exam_name.Contains(name));
+                    query = query.Where(e => e.Status.Contains(name));
+                    query = query.Where(e => e.Exam_marking_assignment.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
+
         [HttpPost]
         public async Task<ActionResult<List<Manage_Exam_Schedule>>> Add(Manage_Exam_Schedule chu_de)
         {

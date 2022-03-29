@@ -10,6 +10,8 @@ namespace E_Library.Model
         public string Full_name { get; set; } = string.Empty;
         public DateTime Date_of_birth { get; set; }
         public string Sex { get; set; } = string.Empty;
+        public string Subject_group { get; set; } = string.Empty;
+        public string Position { get; set; } = string.Empty;
         public string Ethnic { get; set; } = string.Empty;
         public DateTime Starting_date { get; set; }
         public string Nationality { get; set; } = string.Empty;

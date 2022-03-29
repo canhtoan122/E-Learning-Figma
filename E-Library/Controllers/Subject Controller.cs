@@ -24,13 +24,30 @@ namespace E_Library.Controllers
         {
             return Ok(await _context.Subject.ToListAsync());
         }
-        [HttpGet("{Mã Khoa Khối}")]
-        public async Task<ActionResult<List<Subject>>> Get_Môn_Học(string mon)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Subject>>> Subject_Search(string name)
         {
-            var result = await _context.Subject.FindAsync(mon);
-            if (result == null)
-                return BadRequest("Subject not found.");
-            return Ok(result);
+            try
+            {
+                IQueryable<Subject> query = _context.Subject;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Subject_code.Contains(name));
+                    query = query.Where(e => e.Subject_name.Contains(name));
+                    query = query.Where(e => e.Subject_type.Contains(name));
+                    query = query.Where(e => e.First_semester_lession.Contains(name));
+                    query = query.Where(e => e.Second_semester_lession.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]

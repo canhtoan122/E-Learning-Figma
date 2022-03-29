@@ -24,14 +24,14 @@ namespace E_Library.Controllers
             var sum = _context.Student.Count<Student>();
             return Ok(sum);
         }
-        [HttpGet("Giảng viên")]
+        [HttpGet("Teacher")]
         [Authorize(Roles = "Leadership")]
         public async Task<ActionResult<List<Teacher>>> Get_Teacher()
         {
             var sum = _context.Teacher.Count<Teacher>();
             return Ok(sum);
         }
-        [HttpGet("Lớp học")]
+        [HttpGet("Class")]
         [Authorize(Roles = "Leadership")]
         public async Task<ActionResult<List<Class>>> Get_Classroom()
         {

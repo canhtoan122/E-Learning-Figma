@@ -24,6 +24,29 @@ namespace E_Library.Controllers
         {
             return Ok(await _context.User_group.ToListAsync());
         }
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<User_group>>> User_group_Search(string name)
+        {
+            try
+            {
+                IQueryable<User_group> query = _context.User_group;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Group_name.Contains(name));
+                    query = query.Where(e => e.User_number.Contains(name));
+                    query = query.Where(e => e.Notification.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
+        }
 
         [HttpPost]
         public async Task<ActionResult<List<User_group>>> Add(User_group user)

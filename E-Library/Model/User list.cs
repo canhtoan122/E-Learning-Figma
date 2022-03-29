@@ -9,5 +9,6 @@ namespace E_Library.Model
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string User_group { get; set; } = string.Empty;
+        public string Status { get; set; } = string.Empty;
     }
 }

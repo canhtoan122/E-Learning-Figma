@@ -28,13 +28,33 @@ namespace E_Library.Controllers
             return Ok(await _context.School_transfer_admission.ToListAsync());
         }
 
-        [HttpGet("Tìm Mã học viên")]
-        public async Task<ActionResult<List<School_transfer_admission>>> Search_mã_học_viên(string name)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<School_transfer_admission>>> School_transfer_admission_Search(string name)
         {
-            var result = await _context.School_transfer_admission.FindAsync(name);
-            if (result == null)
-                return BadRequest("Student not found.");
-            return Ok(await _context.School_transfer_admission.ToListAsync());
+            try
+            {
+                IQueryable<School_transfer_admission> query = _context.School_transfer_admission;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Student_code.Contains(name));
+                    query = query.Where(e => e.Student_name.Contains(name));
+                    query = query.Where(e => e.Date_of_birth.Contains(name));
+                    query = query.Where(e => e.Sex.Contains(name));
+                    query = query.Where(e => e.Transfer_from.Contains(name));
+                    query = query.Where(e => e.Transfer_semester.Contains(name));
+                    query = query.Where(e => e.Department.Contains(name));
+                    query = query.Where(e => e.Transfer_date.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]

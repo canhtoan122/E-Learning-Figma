@@ -25,14 +25,30 @@ namespace E_Library.Controllers
             return Ok(await _context.Classroom_setting.ToListAsync());
         }
 
-        [HttpGet("{Loại lớp}")]
-        public async Task<ActionResult<List<Classroom_setting>>> Get_Loại_Lớp(string classroom)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Classroom_setting>>> Classroom_setting_Search(string name)
         {
-            var result = await _context.Classroom_setting.FindAsync(classroom);
-            if (result == null)
-                return BadRequest("Classroom not found.");
-            return Ok(result);
+            try
+            {
+                IQueryable<Classroom_setting> query = _context.Classroom_setting;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Subject_type.Contains(name));
+                    query = query.Where(e => e.Status.Contains(name));
+                    query = query.Where(e => e.Notification.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
+
         [HttpPost]
         public async Task<ActionResult<List<Classroom_setting>>> Add(Classroom_setting classroom)
         {

@@ -24,13 +24,30 @@ namespace E_Library.Controllers
         {
             return Ok(await _context.School_year.ToListAsync());
         }
-        [HttpGet("{id}")]
-        public async Task<ActionResult<List<School_year>>> Get_Niên_Khoá(int id)
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<School_year>>> School_Year_Search(string name)
         {
-            var result = await _context.School_year.FindAsync(id);
-            if (result == null)
-                return BadRequest("School year not found.");
-            return Ok(result);
+            try
+            {
+                IQueryable<School_year> query = _context.School_year;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Serial.Contains(name));
+                    query = query.Where(e => e.School_year_time.Contains(name));
+                    query = query.Where(e => e.Semester_start_date.Contains(name));
+                    query = query.Where(e => e.Semester_end_date.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]

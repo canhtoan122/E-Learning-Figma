@@ -27,13 +27,30 @@ namespace E_Library.Controllers
         {
             return Ok(await _context.Disciplinary_list.ToListAsync());
         }
-        [HttpGet("{Mã Học Viên}")]
-        public async Task<ActionResult<List<Disciplinary_list>>> Get_Mã_Học_Viên(Student student)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Disciplinary_list>>> Disciplinary_list_Search(string name)
         {
-            var result = await _context.Student.FindAsync(student);
-            if (result == null)
-                return BadRequest(" Student not found");
-            return Ok(result);
+            try
+            {
+                IQueryable<Disciplinary_list> query = _context.Disciplinary_list;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Student_code.Contains(name));
+                    query = query.Where(e => e.Student_name.Contains(name));
+                    query = query.Where(e => e.Date_of_birth.Contains(name));
+                    query = query.Where(e => e.Sex.Contains(name));
+                    query = query.Where(e => e.Disciplinary_number.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]

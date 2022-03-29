@@ -27,13 +27,30 @@ namespace E_Library.Controllers
         {
             return Ok(await _context.Teacher.ToListAsync());
         }
-        [HttpGet("{Mã Giảng Viên}")]
-        public async Task<ActionResult<List<Teacher>>> Get_Mã_Giảng_Viên(string giang_vien)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Teacher>>> Teacher_Search(string name)
         {
-            var result = await _context.Teacher.FindAsync(giang_vien);
-            if (result == null)
-                return BadRequest("Teacher not found");
-            return Ok(result);
+            try
+            {
+                IQueryable<Teacher> query = _context.Teacher;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Teacher_code.Contains(name));
+                    query = query.Where(e => e.Full_name.Contains(name));
+                    query = query.Where(e => e.Sex.Contains(name));
+                    query = query.Where(e => e.Subject_group.Contains(name));
+                    query = query.Where(e => e.Position.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]
@@ -161,6 +178,62 @@ namespace E_Library.Controllers
 
             _context.FileData.Add(fileData);
             _context.SaveChanges();
+        }
+
+        [HttpGet]
+        public List<FileRecord> GetAllFiles()
+        {
+            //getting data from inmemory obj
+            //return fileDB;
+            //getting data from SQL DB
+            return _context.FileData.Select(n => new FileRecord
+            {
+                Id = n.Id,
+                ContentType = n.MimeType,
+                FileFormat = n.FileExtension,
+                FileName = n.FileName,
+                FilePath = n.FilePath
+            }).ToList();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> DownloadFile(int id)
+        {
+            if (!Directory.Exists(AppDirectory))
+                Directory.CreateDirectory(AppDirectory);
+
+            //getting file from inmemory obj
+            //var file = fileDB?.Where(n => n.Id == id).FirstOrDefault();
+            //getting file from DB
+            var file = _context.FileData.Where(n => n.Id == id).FirstOrDefault();
+
+            var path = Path.Combine(AppDirectory, file?.FilePath);
+
+            var memory = new MemoryStream();
+            using (var stream = new FileStream(path, FileMode.Open))
+            {
+                await stream.CopyToAsync(memory);
+            }
+            memory.Position = 0;
+            var contentType = "APPLICATION/octet-stream";
+            var fileName = Path.GetFileName(path);
+
+            return File(memory, contentType, fileName);
+        }
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> DeleteFile(int id)
+        {
+            var file = _context.FileData.Where(n => n.Id == id).FirstOrDefault();
+
+            var path = Path.Combine(AppDirectory, file?.FilePath);
+
+
+            if (path != null)
+            {
+                System.IO.File.Delete(path);
+                _context.SaveChanges();
+            }
+            return Ok(await _context.FileData.ToListAsync());
         }
     }
 }

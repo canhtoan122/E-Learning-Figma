@@ -229,6 +229,7 @@ namespace E_Library.Migrations
                 {
                     School_year_ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Serial = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     School_year_time = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Starting_date = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ending_date = table.Column<string>(type: "nvarchar(max)", nullable: false),

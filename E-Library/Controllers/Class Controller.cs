@@ -24,13 +24,31 @@ namespace E_Library.Controllers
         {
             return Ok(await _context.Class.ToListAsync());
         }
-        [HttpGet("{Mã Lớp}")]
-        public async Task<ActionResult<List<Class>>> Get_Môn_Học(string lop)
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Class>>> Class_Search(string name)
         {
-            var result = await _context.Class.FindAsync(lop);
-            if (result == null)
-                return BadRequest("Class not found.");
-            return Ok(result);
+            try
+            {
+                IQueryable<Class> query = _context.Class;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Class_code.Contains(name));
+                    query = query.Where(e => e.Class_name.Contains(name));
+                    query = query.Where(e => e.Homeroom_teacher.Contains(name));
+                    query = query.Where(e => e.Student_number.Contains(name));
+                    query = query.Where(e => e.Class_classify.Contains(name));
+                    query = query.Where(e => e.Description.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
 
         [HttpPost]

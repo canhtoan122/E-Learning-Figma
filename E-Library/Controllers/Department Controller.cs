@@ -24,14 +24,30 @@ namespace E_Library.Controllers
         {
             return Ok(await _context.Department.ToListAsync());
         }
-        [HttpGet("{Mã Khoa Khối}")]
-        public async Task<ActionResult<List<Department>>> Get_Khoa_Khối(string khoa)
+
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Department>>> Department_Search(string name)
         {
-            var result = await _context.Department.FindAsync(khoa);
-            if (result == null)
-                return BadRequest("Department not found.");
-            return Ok(result);
+            try
+            {
+                IQueryable<Department> query = _context.Department;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(e => e.Department_code.Contains(name));
+                    query = query.Where(e => e.Department_name.Contains(name));
+                }
+                if (query.Any())
+                {
+                    return Ok(query);
+                }
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
+            }
         }
+
         [HttpGet("{Danh sách lớp học}")]
         public async Task<ActionResult<List<Class>>> Get_Danh_sách_Lớp_Học()
         {
