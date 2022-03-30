@@ -35,5 +35,9 @@ namespace E_Library.Data
         public DbSet<Exam_Grade> Exam_Grade { get; set; }
         public DbSet<Notification> Notification { get; set; }
         public DbSet<Help> Help { get; set; }
+        public DbSet<Course> Course { get; set; }
+        public DbSet<Online_class> Online_class { get; set; }
+        public DbSet<Q_A_questionaire> Q_A_questionaire { get; set; }
+        public DbSet<Exam> Exam { get; set; }
     }
 }

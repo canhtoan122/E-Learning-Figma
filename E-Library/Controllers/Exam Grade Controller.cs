@@ -102,7 +102,7 @@ namespace E_Library.Controllers
             }
         }
 
-        [HttpGet("Department Filter")]
+        [HttpGet("CLass Filter")]
         public async Task<ActionResult<IEnumerable<Class>>> Class_Filter(string name)
         {
             try

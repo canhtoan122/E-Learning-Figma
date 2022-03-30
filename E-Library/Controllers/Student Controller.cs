@@ -70,7 +70,7 @@ namespace E_Library.Controllers
         {
             var hoc_vien = await _context.Student.FindAsync(request.Student_ID);
             if (hoc_vien == null)
-                return BadRequest("Ko tìm thấy học viên.");
+                return BadRequest("Student not found.");
 
             hoc_vien.Full_name = request.Full_name;
             hoc_vien.Sex = request.Sex;

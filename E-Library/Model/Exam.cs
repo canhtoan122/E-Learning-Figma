@@ -15,5 +15,7 @@ namespace E_Library.Model
         public string Ending_date { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
         public string Other_setting { get; set; } = string.Empty;
+        public Subject_group Subject_Group { get; set; }
+        //public List<Subject> Subject { get; set; } = new List<Subject>();
     }
 }

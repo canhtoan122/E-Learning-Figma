@@ -92,7 +92,7 @@ namespace E_Library.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error retreiving data from the database");
             }
         }
-        [HttpGet("department filter")]
+        [HttpGet("Exam date filter")]
         public async Task<ActionResult<IEnumerable<Exam_List>>> Exam_Date_filter(string name)
         {
             try

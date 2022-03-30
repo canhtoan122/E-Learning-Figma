@@ -10,52 +10,52 @@ namespace E_Library.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LeadershipLogin : ControllerBase
+    public class StudentLoginController : ControllerBase
     {
-        public static LeadershipRegister leadership = new LeadershipRegister();
+        public static StudentRegister student = new StudentRegister();
         private readonly IConfiguration _configuration;
 
 
-        public LeadershipLogin(IConfiguration configuration)
+        public StudentLoginController(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<LeadershipRegister>> Register(LeadershipDto request)
+        public async Task<ActionResult<StudentRegister>> Register(StudentDto request)
         {
-            CreatePasswordHash(request.leadership_password, out byte[] leadership_passwordHash, out byte[] leadership_passwordSalt);
+            CreatePasswordHash(request.student_password, out byte[] student_passwordHash, out byte[] student_passwordSalt);
 
-            leadership.leadership_username = request.leadership_username;
-            leadership.leadership_passwordHash = leadership_passwordHash;
-            leadership.leadership_passwordSalt = leadership_passwordSalt;
+            student.student_username = request.student_username;
+            student.student_passwordHash = student_passwordHash;
+            student.student_passwordSalt = student_passwordSalt;
 
-            return Ok(leadership);
+            return Ok(student);
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult<string>> Login(LeadershipDto request)
+        public async Task<ActionResult<string>> Login(StudentDto request)
         {
-            if (leadership.leadership_username != request.leadership_username)
+            if (student.student_username != request.student_username)
             {
                 return BadRequest("Username not found.");
             }
 
-            if (!VerifyPasswordHash(request.leadership_password, leadership.leadership_passwordHash, leadership.leadership_passwordSalt))
+            if (!VerifyPasswordHash(request.student_password, student.student_passwordHash, student.student_passwordSalt))
             {
                 return BadRequest("Wrong password.");
             }
 
-            string token = CreateToken(leadership);
+            string token = CreateToken(student);
             return Ok(token);
         }
 
-        private string CreateToken(LeadershipRegister leadership)
+        private string CreateToken(StudentRegister student)
         {
             List<Claim> claims = new List<Claim>
             {
-                new Claim(ClaimTypes.Name, leadership.leadership_username),
-                new Claim(ClaimTypes.Role, "Leadership")
+                new Claim(ClaimTypes.Name, student.student_username),
+                new Claim(ClaimTypes.Role, "Student")
             };
 
             var key = new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(
@@ -89,12 +89,6 @@ namespace E_Library.Controllers
                 var computedHash = hmac.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
                 return computedHash.SequenceEqual(passwordHash);
             }
-        }
-        public async void ForgotPasswordAsync(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            if(user == null)
-                return new UserManager
         }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Library.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220329080150_CreateInitial")]
+    [Migration("20220330064744_CreateInitial")]
     partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,6 +40,10 @@ namespace E_Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Class_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Class_name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -52,13 +56,83 @@ namespace E_Library.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("School_year_ID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Student_number")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Class_ID");
 
+                    b.HasIndex("School_year_ID");
+
                     b.ToTable("Class");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Class_History", b =>
+                {
+                    b.Property<int>("Class_History_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Class_History_ID"), 1L, 1);
+
+                    b.Property<string>("CLass_code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Class")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Class_schedule")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ending_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Exam_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Other_setting")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Security_password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Shared_link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Starting_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Teacher")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Class_History_ID");
+
+                    b.ToTable("Class_History");
                 });
 
             modelBuilder.Entity("E_Library.Model.Classroom_setting", b =>
@@ -86,6 +160,27 @@ namespace E_Library.Migrations
                     b.ToTable("Classroom_setting");
                 });
 
+            modelBuilder.Entity("E_Library.Model.Course", b =>
+                {
+                    b.Property<int>("Course_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Course_ID"), 1L, 1);
+
+                    b.Property<string>("Completed_course")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Uncompleted_course")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Course_ID");
+
+                    b.ToTable("Course");
+                });
+
             modelBuilder.Entity("E_Library.Model.Department", b =>
                 {
                     b.Property<int>("Department_ID")
@@ -93,6 +188,9 @@ namespace E_Library.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Department_ID"), 1L, 1);
+
+                    b.Property<int>("Class_ID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Dean")
                         .IsRequired()
@@ -107,6 +205,8 @@ namespace E_Library.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Department_ID");
+
+                    b.HasIndex("Class_ID");
 
                     b.ToTable("Department");
                 });
@@ -150,6 +250,174 @@ namespace E_Library.Migrations
                     b.HasKey("Disciplinary_list_ID");
 
                     b.ToTable("Disciplinary_list");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Exam", b =>
+                {
+                    b.Property<int>("Exam_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Exam_ID"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ending_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Exam_classify")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Exam_time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Exam_topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Other_setting")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Starting_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Subject_group_ID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Test_form")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Exam_ID");
+
+                    b.HasIndex("Subject_group_ID");
+
+                    b.ToTable("Exam");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Exam_Grade", b =>
+                {
+                    b.Property<int>("Exam_Grade_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Exam_Grade_ID"), 1L, 1);
+
+                    b.Property<string>("A_quarter_hour_test")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Attendance_grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Final_test_test")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Half_hour_test")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mid_term_test")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Oral_test")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Pass")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Update_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Year_average_grade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Exam_Grade_ID");
+
+                    b.ToTable("Exam_Grade");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Exam_List", b =>
+                {
+                    b.Property<int>("Exam_List_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Exam_List_ID"), 1L, 1);
+
+                    b.Property<string>("Class")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Department")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ending_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Exam_amount_of_time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Exam_content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Other_setting")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Security_password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Shared_link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Starting_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Teaching_Assistant")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Exam_List_ID");
+
+                    b.ToTable("Exam_List");
                 });
 
             modelBuilder.Entity("E_Library.Model.FileData", b =>
@@ -208,6 +476,76 @@ namespace E_Library.Migrations
                     b.HasKey("Grade_ID");
 
                     b.ToTable("Grade");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Help", b =>
+                {
+                    b.Property<int>("Help_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Help_ID"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Help_ID");
+
+                    b.ToTable("Help");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Lesson", b =>
+                {
+                    b.Property<int>("Lesson_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Lesson_ID"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ending_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lession_time")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lesson_topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Other_setting")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Security_password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Share_link")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Starting_date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Teaching_assistant")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Lesson_ID");
+
+                    b.ToTable("Lesson");
                 });
 
             modelBuilder.Entity("E_Library.Model.List_of_award", b =>
@@ -323,6 +661,57 @@ namespace E_Library.Migrations
                     b.HasKey("Management_of_training_levels_ID");
 
                     b.ToTable("Management_of_training_levels");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Notification", b =>
+                {
+                    b.Property<int>("Notification_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Notification_ID"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Receiver")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Topic")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Notification_ID");
+
+                    b.ToTable("Notification");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Online_class", b =>
+                {
+                    b.Property<int>("Online_class_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Online_class_ID"), 1L, 1);
+
+                    b.HasKey("Online_class_ID");
+
+                    b.ToTable("Online_class");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Q_A_questionaire", b =>
+                {
+                    b.Property<int>("Q_A_questionaire_ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Q_A_questionaire_ID"), 1L, 1);
+
+                    b.HasKey("Q_A_questionaire_ID");
+
+                    b.ToTable("Q_A_questionaire");
                 });
 
             modelBuilder.Entity("E_Library.Model.Reservation_Record", b =>
@@ -698,6 +1087,9 @@ namespace E_Library.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Subject_ID"), 1L, 1);
 
+                    b.Property<int?>("Exam_ID")
+                        .HasColumnType("int");
+
                     b.Property<string>("First_semester_lession")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -719,6 +1111,8 @@ namespace E_Library.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Subject_ID");
+
+                    b.HasIndex("Exam_ID");
 
                     b.ToTable("Subject");
                 });
@@ -995,6 +1389,46 @@ namespace E_Library.Migrations
                     b.ToTable("User_list");
                 });
 
+            modelBuilder.Entity("E_Library.Model.Class", b =>
+                {
+                    b.HasOne("E_Library.Model.School_year", "School_year")
+                        .WithMany()
+                        .HasForeignKey("School_year_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("School_year");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Department", b =>
+                {
+                    b.HasOne("E_Library.Model.Class", "Class")
+                        .WithMany("Department")
+                        .HasForeignKey("Class_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Exam", b =>
+                {
+                    b.HasOne("E_Library.Model.Subject_group", "Subject_Group")
+                        .WithMany()
+                        .HasForeignKey("Subject_group_ID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Subject_Group");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Subject", b =>
+                {
+                    b.HasOne("E_Library.Model.Exam", null)
+                        .WithMany("Subject")
+                        .HasForeignKey("Exam_ID");
+                });
+
             modelBuilder.Entity("E_Library.Model.Subject_group", b =>
                 {
                     b.HasOne("E_Library.Model.Subject", "Subject")
@@ -1003,6 +1437,16 @@ namespace E_Library.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Class", b =>
+                {
+                    b.Navigation("Department");
+                });
+
+            modelBuilder.Entity("E_Library.Model.Exam", b =>
+                {
                     b.Navigation("Subject");
                 });
 #pragma warning restore 612, 618

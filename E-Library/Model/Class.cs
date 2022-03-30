@@ -7,12 +7,13 @@ namespace E_Library.Model
         [Key]
         public int Class_ID { get; set; }
         public string Class_code { get; set; } = string.Empty;
+        public string Class_date { get; set; } = string.Empty;
         public string Class_name { get; set; } = string.Empty;
         public string Homeroom_teacher { get; set; } = string.Empty;
         public string Student_number { get; set; } = string.Empty;
         public string Class_classify { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        //public IEnumerable<School_year> School_year { get; set; }
-        //public IEnumerable<Subject> Subject { get; set; }
+        public School_year School_year { get; set; }
+        public List<Department> Department { get; set; } = new List<Department>();
     }
 }
