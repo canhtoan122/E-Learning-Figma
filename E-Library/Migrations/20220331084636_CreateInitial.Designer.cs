@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Library.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220330064744_CreateInitial")]
+    [Migration("20220331084636_CreateInitial")]
     partial class CreateInitial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1087,9 +1087,6 @@ namespace E_Library.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Subject_ID"), 1L, 1);
 
-                    b.Property<int?>("Exam_ID")
-                        .HasColumnType("int");
-
                     b.Property<string>("First_semester_lession")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1111,8 +1108,6 @@ namespace E_Library.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Subject_ID");
-
-                    b.HasIndex("Exam_ID");
 
                     b.ToTable("Subject");
                 });
@@ -1422,13 +1417,6 @@ namespace E_Library.Migrations
                     b.Navigation("Subject_Group");
                 });
 
-            modelBuilder.Entity("E_Library.Model.Subject", b =>
-                {
-                    b.HasOne("E_Library.Model.Exam", null)
-                        .WithMany("Subject")
-                        .HasForeignKey("Exam_ID");
-                });
-
             modelBuilder.Entity("E_Library.Model.Subject_group", b =>
                 {
                     b.HasOne("E_Library.Model.Subject", "Subject")
@@ -1443,11 +1431,6 @@ namespace E_Library.Migrations
             modelBuilder.Entity("E_Library.Model.Class", b =>
                 {
                     b.Navigation("Department");
-                });
-
-            modelBuilder.Entity("E_Library.Model.Exam", b =>
-                {
-                    b.Navigation("Subject");
                 });
 #pragma warning restore 612, 618
         }

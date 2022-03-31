@@ -90,11 +90,11 @@ namespace E_Library.Controllers
                 return computedHash.SequenceEqual(passwordHash);
             }
         }
-        public async void ForgotPasswordAsync(string email)
-        {
-            var user = await _userManager.FindByEmailAsync(email);
-            if(user == null)
-                return new UserManager
-        }
+        //public async void ForgotPasswordAsync(string email)
+        //{
+        //    var user = await _userManager.FindByEmailAsync(email);
+        //    if(user == null)
+        //        return new UserManager
+        //}
     }
 }

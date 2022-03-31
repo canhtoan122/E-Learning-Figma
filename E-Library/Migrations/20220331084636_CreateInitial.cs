@@ -425,6 +425,23 @@ namespace E_Library.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subject",
+                columns: table => new
+                {
+                    Subject_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Subject_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    First_semester_lession = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Second_semester_lession = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subject", x => x.Subject_ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Subject_setting",
                 columns: table => new
                 {
@@ -568,6 +585,27 @@ namespace E_Library.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subject_group",
+                columns: table => new
+                {
+                    Subject_group_ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Subject_group_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Head_of_department = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Subject_ID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subject_group", x => x.Subject_group_ID);
+                    table.ForeignKey(
+                        name: "FK_Subject_group_Subject_Subject_ID",
+                        column: x => x.Subject_ID,
+                        principalTable: "Subject",
+                        principalColumn: "Subject_ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Department",
                 columns: table => new
                 {
@@ -609,49 +647,11 @@ namespace E_Library.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Exam", x => x.Exam_ID);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Subject",
-                columns: table => new
-                {
-                    Subject_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Subject_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Subject_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Subject_type = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    First_semester_lession = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Second_semester_lession = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Exam_ID = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subject", x => x.Subject_ID);
                     table.ForeignKey(
-                        name: "FK_Subject_Exam_Exam_ID",
-                        column: x => x.Exam_ID,
-                        principalTable: "Exam",
-                        principalColumn: "Exam_ID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Subject_group",
-                columns: table => new
-                {
-                    Subject_group_ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Subject_group_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Head_of_department = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Subject_ID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Subject_group", x => x.Subject_group_ID);
-                    table.ForeignKey(
-                        name: "FK_Subject_group_Subject_Subject_ID",
-                        column: x => x.Subject_ID,
-                        principalTable: "Subject",
-                        principalColumn: "Subject_ID",
+                        name: "FK_Exam_Subject_group_Subject_group_ID",
+                        column: x => x.Subject_group_ID,
+                        principalTable: "Subject_group",
+                        principalColumn: "Subject_group_ID",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -671,30 +671,13 @@ namespace E_Library.Migrations
                 column: "Subject_group_ID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Subject_Exam_ID",
-                table: "Subject",
-                column: "Exam_ID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Subject_group_Subject_ID",
                 table: "Subject_group",
                 column: "Subject_ID");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Exam_Subject_group_Subject_group_ID",
-                table: "Exam",
-                column: "Subject_group_ID",
-                principalTable: "Subject_group",
-                principalColumn: "Subject_group_ID",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Exam_Subject_group_Subject_group_ID",
-                table: "Exam");
-
             migrationBuilder.DropTable(
                 name: "Class_History");
 
@@ -709,6 +692,9 @@ namespace E_Library.Migrations
 
             migrationBuilder.DropTable(
                 name: "Disciplinary_list");
+
+            migrationBuilder.DropTable(
+                name: "Exam");
 
             migrationBuilder.DropTable(
                 name: "Exam_Grade");
@@ -780,16 +766,13 @@ namespace E_Library.Migrations
                 name: "Class");
 
             migrationBuilder.DropTable(
-                name: "School_year");
-
-            migrationBuilder.DropTable(
                 name: "Subject_group");
 
             migrationBuilder.DropTable(
-                name: "Subject");
+                name: "School_year");
 
             migrationBuilder.DropTable(
-                name: "Exam");
+                name: "Subject");
         }
     }
 }
