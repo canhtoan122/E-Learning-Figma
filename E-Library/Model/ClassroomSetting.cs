@@ -2,11 +2,11 @@
 
 namespace E_Library.Model
 {
-    public class Subject_setting
+    public class ClassroomSetting
     {
         [Key]
-        public int Subject_setting_ID { get; set; }
-        public string Subject_type { get; set; } = string.Empty;
+        public int ClassroomSettingID { get; set; }
+        public string SubjectType { get; set; } = string.Empty;
         public string Notification { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
     }

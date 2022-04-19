@@ -2,9 +2,9 @@
 
 namespace E_Library.Model
 {
-    public class Q_A_questionaire
+    public class QAQuestionaire
     {
         [Key]
-        public int Q_A_questionaire_ID { get; set; }
+        public int QAQuestionaireID { get; set; }
     }
 }

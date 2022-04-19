@@ -55,9 +55,9 @@ namespace E_Library.Controllers
         }
         [HttpGet("Exam List")]
         [Authorize(Roles = "Teacher")]
-        public async Task<ActionResult<List<Exam_List>>> Get_Exam_List()
+        public async Task<ActionResult<List<ExamList>>> Get_Exam_List()
         {
-            var sum = _context.Exam_List.Count<Exam_List>();
+            var sum = _context.Exam_List.Count<ExamList>();
             return Ok(sum);
         }
         [HttpGet("Q&A Questionaire")]

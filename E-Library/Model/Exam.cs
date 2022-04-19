@@ -5,17 +5,17 @@ namespace E_Library.Model
     public class Exam
     {
         [Key]
-        public int Exam_ID { get; set; }
-        public string Exam_topic { get; set; } = string.Empty;
-        public string Test_form { get; set; } = string.Empty;
+        public int ExamID { get; set; }
+        public string ExamTopic { get; set; } = string.Empty;
+        public string TestForm { get; set; } = string.Empty;
         public string Grade { get; set; } = string.Empty;
-        public string Exam_time { get; set; } = string.Empty;
-        public string Exam_classify { get; set; } = string.Empty;
-        public string Starting_date { get; set; } = string.Empty;
-        public string Ending_date { get; set; } = string.Empty;
+        public string ExamTime { get; set; } = string.Empty;
+        public string ExamClassify { get; set; } = string.Empty;
+        public string StartingDate { get; set; } = string.Empty;
+        public string EndingDate { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public string Other_setting { get; set; } = string.Empty;
-        public Subject_group Subject_Group { get; set; }
+        public string OtherSetting { get; set; } = string.Empty;
+        public SubjectGroup SubjectGroup { get; set; }
         //public List<Subject> Subject { get; set; } = new List<Subject>();
     }
 }

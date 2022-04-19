@@ -5,15 +5,15 @@ namespace E_Library.Model
     public class Class
     {
         [Key]
-        public int Class_ID { get; set; }
-        public string Class_code { get; set; } = string.Empty;
-        public string Class_date { get; set; } = string.Empty;
-        public string Class_name { get; set; } = string.Empty;
-        public string Homeroom_teacher { get; set; } = string.Empty;
-        public string Student_number { get; set; } = string.Empty;
-        public string Class_classify { get; set; } = string.Empty;
+        public int ClassID { get; set; }
+        public string ClassCode { get; set; } = string.Empty;
+        public string ClassDate { get; set; } = string.Empty;
+        public string ClassName { get; set; } = string.Empty;
+        public string HomeroomTeacher { get; set; } = string.Empty;
+        public string StudentNumber { get; set; } = string.Empty;
+        public string ClassClassify { get; set; } = string.Empty;
         public string Description { get; set; } = string.Empty;
-        public School_year School_year { get; set; }
+        public SchoolYear SchoolYear { get; set; }
         public List<Department> Department { get; set; } = new List<Department>();
     }
 }

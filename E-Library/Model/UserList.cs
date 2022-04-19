@@ -2,13 +2,13 @@
 
 namespace E_Library.Model
 {
-    public class User_list
+    public class UserList
     {
         [Key]
-        public int User_list_ID { get; set; }
+        public int UserListID { get; set; }
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
-        public string User_group { get; set; } = string.Empty;
+        public string UserGroup { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
     }
 }

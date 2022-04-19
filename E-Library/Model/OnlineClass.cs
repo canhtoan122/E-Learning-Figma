@@ -2,9 +2,9 @@
 
 namespace E_Library.Model
 {
-    public class Online_class
+    public class OnlineClass
     {
         [Key]
-        public int Online_class_ID { get; set; }
+        public int OnlineClassID { get; set; }
     }
 }

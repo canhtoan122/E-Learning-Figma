@@ -22,17 +22,17 @@ namespace E_Library.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Exam_List>>> Get()
+        public async Task<ActionResult<List<ExamList>>> Get()
         {
             return Ok(await _context.Exam_List.ToListAsync());
         }
 
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Exam_List>>> Exam_List_Search(string name)
+        public async Task<ActionResult<IEnumerable<ExamList>>> Exam_List_Search(string name)
         {
             try
             {
-                IQueryable<Exam_List> query = _context.Exam_List;
+                IQueryable<ExamList> query = _context.Exam_List;
                 if (!string.IsNullOrEmpty(name))
                 {
                     query = query.Where(e => e.Topic.Contains(name));           
@@ -50,11 +50,11 @@ namespace E_Library.Controllers
         }
 
         [HttpGet("subject filter")]
-        public async Task<ActionResult<IEnumerable<Exam_List>>> Subject_filter(string name)
+        public async Task<ActionResult<IEnumerable<ExamList>>> Subject_filter(string name)
         {
             try
             {
-                IQueryable<Exam_List> query = _context.Exam_List;
+                IQueryable<ExamList> query = _context.Exam_List;
                 if (!string.IsNullOrEmpty(name))
                 {
                     query = query.Where(e => e.Subject.Contains(name));
@@ -72,11 +72,11 @@ namespace E_Library.Controllers
         }
 
         [HttpGet("department filter")]
-        public async Task<ActionResult<IEnumerable<Exam_List>>> Department_filter(string name)
+        public async Task<ActionResult<IEnumerable<ExamList>>> Department_filter(string name)
         {
             try
             {
-                IQueryable<Exam_List> query = _context.Exam_List;
+                IQueryable<ExamList> query = _context.Exam_List;
                 if (!string.IsNullOrEmpty(name))
                 {
                     query = query.Where(e => e.Department.Contains(name));
@@ -93,11 +93,11 @@ namespace E_Library.Controllers
             }
         }
         [HttpGet("Exam date filter")]
-        public async Task<ActionResult<IEnumerable<Exam_List>>> Exam_Date_filter(string name)
+        public async Task<ActionResult<IEnumerable<ExamList>>> Exam_Date_filter(string name)
         {
             try
             {
-                IQueryable<Exam_List> query = _context.Exam_List;
+                IQueryable<ExamList> query = _context.Exam_List;
                 if (!string.IsNullOrEmpty(name))
                 {
                     query = query.Where(e => e.Starting_date.Contains(name)
@@ -116,7 +116,7 @@ namespace E_Library.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<List<Exam_List>>> Add(Exam_List exam)
+        public async Task<ActionResult<List<ExamList>>> Add(ExamList exam)
         {
             _context.Exam_List.Add(exam);
             await _context.SaveChangesAsync();
@@ -125,7 +125,7 @@ namespace E_Library.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<List<Exam_List>>> Update(Exam_List request)
+        public async Task<ActionResult<List<ExamList>>> Update(ExamList request)
         {
             var result = await _context.Exam_List.FindAsync(request.Exam_List_ID);
             if (result == null)
@@ -147,7 +147,7 @@ namespace E_Library.Controllers
         }
 
         [HttpDelete("id")]
-        public async Task<ActionResult<List<Exam_List>>> Delete(int id)
+        public async Task<ActionResult<List<ExamList>>> Delete(int id)
         {
             var result = await _context.Exam_List.FindAsync(id);
             if (result == null)

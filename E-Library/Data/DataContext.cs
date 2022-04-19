@@ -30,8 +30,8 @@ namespace E_Library.Data
         public DbSet<Subject_setting> Subject_setting { get; set; }
         public DbSet<Management_of_training_levels> Management_of_training_levels { get; set; }
         public DbSet<Lesson> Lesson { get; set; }
-        public DbSet<Class_History> Class_History { get; set; }
-        public DbSet<Exam_List> Exam_List { get; set; }
+        public DbSet<ClassHistory> Class_History { get; set; }
+        public DbSet<ExamList> Exam_List { get; set; }
         public DbSet<Exam_Grade> Exam_Grade { get; set; }
         public DbSet<Notification> Notification { get; set; }
         public DbSet<Help> Help { get; set; }
