@@ -7,37 +7,37 @@ namespace E_Library.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        public DbSet<School_year> School_year { get; set; }
-        public DbSet<Subject_group> Subject_group { get; set; }
+        public DbSet<SchoolYear> SchoolYear { get; set; }
+        public DbSet<SubjectGroup> SubjectGroup { get; set; }
         public DbSet<Subject> Subject { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<Class> Class { get; set; }
         public DbSet<Student> Student { get; set; }
         public DbSet<Grade> Grade { get; set; }
-        public DbSet<List_of_award> List_of_award { get; set; }
+        public DbSet<ListOfAward> ListOfAward { get; set; }
         public DbSet<FileData> FileData { get; set; }
-        public DbSet<Disciplinary_list> Disciplinary_list { get; set; }
-        public DbSet<School_transfer_admission> School_transfer_admission { get; set; }
-        public DbSet<Reservation_Record> Reservation_Record { get; set; }
+        public DbSet<DisciplinaryList> DisciplinaryList { get; set; }
+        public DbSet<SchoolTransferAdmission> SchoolTransferAdmission { get; set; }
+        public DbSet<ReservationRecord> ReservationRecord { get; set; }
         public DbSet<Teacher> Teacher { get; set; }
-        public DbSet<Teaching_Assignment> Teaching_Assignment { get; set; }
-        public DbSet<Topic_list> Topic_list { get; set; }
-        public DbSet<Manage_Exam_Schedule> Manage_Exam_Schedule { get; set; }
-        public DbSet<School_Information> School_Information { get; set; }
-        public DbSet<User_group> User_group { get; set; }
-        public DbSet<User_list> User_list { get; set; }
-        public DbSet<Classroom_setting> Classroom_setting { get; set; }
-        public DbSet<Subject_setting> Subject_setting { get; set; }
-        public DbSet<Management_of_training_levels> Management_of_training_levels { get; set; }
+        public DbSet<TeachingAssignment> TeachingAssignment { get; set; }
+        public DbSet<TopicList> TopicList { get; set; }
+        public DbSet<ManageExamSchedule> ManageExamSchedule { get; set; }
+        public DbSet<SchoolInformation> SchoolInformation { get; set; }
+        public DbSet<UserGroup> UserGroup { get; set; }
+        public DbSet<UserList> UserList { get; set; }
+        public DbSet<ClassroomSetting> ClassroomSetting { get; set; }
+        public DbSet<SubjectSetting> SubjectSetting { get; set; }
+        public DbSet<ManagementOfTrainingLevels> ManagementOfTrainingLevels { get; set; }
         public DbSet<Lesson> Lesson { get; set; }
-        public DbSet<ClassHistory> Class_History { get; set; }
-        public DbSet<ExamList> Exam_List { get; set; }
-        public DbSet<Exam_Grade> Exam_Grade { get; set; }
+        public DbSet<ClassHistory> ClassHistory { get; set; }
+        public DbSet<ExamList> ExamList { get; set; }
+        public DbSet<ExamGrade> ExamGrade { get; set; }
         public DbSet<Notification> Notification { get; set; }
         public DbSet<Help> Help { get; set; }
         public DbSet<Course> Course { get; set; }
-        public DbSet<Online_class> Online_class { get; set; }
-        public DbSet<Q_A_questionaire> Q_A_questionaire { get; set; }
+        public DbSet<OnlineClass> OnlineClass { get; set; }
+        public DbSet<QAQuestionaire> QAQuestionaire { get; set; }
         public DbSet<Exam> Exam { get; set; }
     }
 }
