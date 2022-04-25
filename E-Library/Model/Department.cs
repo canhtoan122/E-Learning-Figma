@@ -9,7 +9,6 @@ namespace E_Library.Model
         public string DepartmentCode { get; set; } = string.Empty;
         public string DepartmentName { get; set; } = string.Empty;
         public string Dean { get; set; } = string.Empty;
-        public Class Class { get; set; }
 
     }
 }
